@@ -1,44 +1,67 @@
+<!-- home.html -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Insta-Lite DApp</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header>
-            <h1>Insta-Lite</h1>
-            <button id="connectWallet">Connect Wallet🪙</button>
-        </header>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insta-Lite DApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Insta-Lite</h1>
+      <button id="connectWallet">Connect Wallet🪙</button>
+    </header>
 
-        <main>
-            <!-- CREATE NEW POST -->
-            <section id="newPost">
-                <h2> Create New Post📸</h2>
-                <input type="file" id="uploadImage" accept="image/*">
-                <input type="text" id="caption" placeholder="Write a caption...">
-                <button id="postButton">Post</button>
-            </section>
+    <main>
+      <!-- Profile -->
+      <section id="profileSection">
+        <h2>Create Profile 👤</h2>
 
-            <!-- FEED / RECENT POSTS-->
-             <section id="feed">
-                <h2>Recent Posts</h2>
-                <!-- **Posts will be dynamically added here** -->
-                 <div class="post">
-                    <img src="sample1.jpg" alt="Sample">
-                    <p><strong>@user1</strong> enjoying decentralization 🌐</p>
-                    <button class="likeBtn">💛 Like</button>
-                    <button class="tipBtn">💰 Tip</button>
-                 </div>
-             </section>
-        </main>
+        <input type="text" id="username" placeholder="Username" />
 
-        <footer>
-            <p style="text-align: center;">Built with 💜 on Etherium</p>
-        </footer>
+        <select id="role">
+          <option value="1">Basic</option>
+          <option value="2">Creator</option>
+          <option value="3">Business</option>
+        </select>
 
-        <script src="app.js"></script>
+        <button id="createProfileBtn">Create Profile</button>
+      </section>
 
-    </body>
+      <!-- CREATE NEW POST -->
+      <section id="newPost">
+        <h2>Create New Post 📸</h2>
+
+        <!-- IMAGE UPLOAD + PREVIEW -->
+        <input type="file" id="uploadImage" accept="image/*" />
+        <img
+          id="preview"
+          style="
+            display: none;
+            width: 200px;
+            margin-top: 10px;
+            border-radius: 10px;
+          "
+        />
+
+        <!-- CAPTION -->
+        <input type="text" id="caption" placeholder="Write a caption..." />
+
+        <button id="postButton">Post</button>
+      </section>
+
+      <!-- FEED / RECENT POSTS -->
+      <section id="feed">
+        <h2>Recent Posts</h2>
+        <div id="postContainer"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p style="text-align: center">Built with 💜 on Etherium</p>
+    </footer>
+
+    <script src="app-intsalite.js"></script>
+  </body>
 </html>

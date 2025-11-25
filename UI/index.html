@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Insta-Lite DApp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <div>
+                <h3>Active Account</h3>
+                <select id="accountAddr">
+                    <option value="">---</option>
+                </select>                
+                <button>Init Ganache</button><br>
+                <input type="text" id="contractAddr" placeholder="Enter contract address">
+                <button id="loadContract">Load Contract</button>
+            </div>
+            <img src="INSTA-lite.png" style="height: 90px; align-items: center; text-align: center;">
+            <button id="createAccount">➕ Create Account </button>
+        </header>
+
+        <main>
+            <!-- PROFILE && WALLET -->
+             <div id="profileBox">
+                <div class="profileDiv">
+                    <div class="profileHeader">
+                        <h3>Your Profile</h3>
+                    </div>
+
+                    <div class="profileBody">
+                        <p><strong>Active Wallet:</strong></p>
+                        <p id="activeAccount">Not Connected</p>
+                        <button id="connectWallet">Connect Wallet 🪙</button>
+
+                    </div>
+                </div>
+             </div>
+
+            
+            <!-- CREATE NEW POST -->
+            <section id="newPost">
+                <h2> Create New Post📸</h2>
+                <input type="file" id="uploadImage" accept="image/*">
+                <input type="text" id="caption" placeholder="Write a caption...">
+                <button id="postButton">Post</button>
+            </section>
+
+            <!-- FEED / RECENT POSTS-->
+             <section id="feed">
+                <h2>Recent Posts</h2>
+                <!-- **Posts will be dynamically added here** -->
+                 <div class="post">
+                    <img src="sample1.jpg" alt="Sample">
+                    <p><strong>@user1</strong> enjoying decentralization 🌐</p>
+                    <button class="likeBtn">💛 Like</button>
+                    <button class="tipBtn">💰 Tip</button>
+                 </div>
+             </section>
+
+             <!-- TIPPING SECTION -->
+              <aside id="tip">
+                <div class="tipDiv">
+                    <div class="tipHeader">
+                        <h3>Leave a Tip 💰</h3>
+                    </div>
+                    
+
+                <div class="tipBody">
+                    <div class="userSelect">
+                        <h4>Select a User to tip</h4>                  
+                        <select id="tipUser">
+                            <option value="">-- Choose a User --</option>
+                            <option value="user1">@user1</option>
+                            <option value="user2">@user2</option>
+                            <option value="user3">@user3</option>
+                        </select>
+                    </div>            
+
+                    <div class="amount">
+                        <h4>Enter Amount to Tip</h4>
+                        <input type="text" id="tipAmount" placeholder="0.05 ETH">
+                        <button id="tipAmountBtn"> Tip</button>
+                    </div>
+                        
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            <p style="text-align: center;">Built with 💜 on Etherium</p>
+        </footer>
+
+        <script type="module" src="app-instalite.js"></script>
+
+    </body>
+</html>

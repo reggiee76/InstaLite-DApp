@@ -1,39 +1,80 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #fff, #ffeef5);    
+    background: linear-gradient(to bottom, #f1b1ca,  #f5f7da);   
     margin: 0;
     padding: 0;
 }
 
-/* HEADER */
+/* *********** HEADER *********** */
 header {
-    background: linear-gradient(to bottom, #f5f7da,  #ffeefd);
-    border-bottom: 1px solid #ddd;
+    background: linear-gradient(to bottom, #f7f5dae3,  #f1b1c9e5);
+    border-bottom: 1px solid #f38bb3;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;    
 }
 
-#accountAddr {
+.logo {
+    height: 90px; 
+    margin: auto;
+}
+.middleDiv {
+    background-color: #ec86abe5;
+    width: 540px;
+    height: 330px;
     border-radius: 12px;
-    height: 28px;
-    width: max-content;
-    padding-bottom: 20px;
-    margin: 10px;
+    margin: auto;
+    padding-top: 0.1px;
+    margin-top: 20px;
+}
+/* *********** CREATE PROFILE *********** */
+
+#createProfileDiv {
+    background: linear-gradient(to top, #f8dede,  #ec86abe5);
+    width: 513px; 
+    height: 125px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    margin: auto;
+    margin-top: 20px;
+    align-content: center;
+    text-align: center;
+    padding: 5px;
+    padding-bottom: 8px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-#contractAddr {
-    border-radius: 12px;
-    height: 23px;
-    width: 200px;
+#username {
+    border-radius: 8px;
+    height: 20px;
+    margin: 5px;
+    padding: 4px;
+    transition: border-color 0.2s ease;
+    outline: none;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+#username:focus {
+    border-color: #e1306c;
 }
 
+#accountType {
+    border-radius: 8px;
+    padding: 4px;
+    transition: border-color 0.2s ease;
+    outline: none;
+    border: 1px solid #ccc;
+    text-align: center;
+}
 
-#createAccount {
+#accountType:focus {
+    border-color: #e1306c;
+}
+
+#createProfileBtn {
     width: max-content;
     align-items: right;
-    background-color: #e1306c;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -41,19 +82,55 @@ header {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-bottom: 10px;
+    margin-left: 5px;
 }
 
-/* CREATE NEW POST */
+#createProfileBtn:hover {
+    background-color: #c7265e;
+    transform: translateY(-2px);
+}
+
+/* *********** CREATE NEW POST *********** */
 #newPost {
+    background: linear-gradient(to bottom, #f8dede,  #ec86abe5);
+    width: 513px;
+    height: 125px;
+    border-radius: 12px;
     align-items: center;
-    margin: 40px;
+    margin: auto;
+    margin-top: 20px;
     padding: 5px;
     text-align: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-/* FEED / RECENT POSTS*/
+#caption {
+    border-radius: 8px;
+    height: 23px;
+    width: 180px;
+    transition: border-color 0.2s ease;
+    outline: none;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+#caption:focus {
+    border-color: #e1306c;
+}
+
+#postBtn {
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;  
+}
+#postBtn:hover {
+    background-color: #c7265e;
+    transform: translateY(-2px);
+}
+
+/* *********** FEED / RECENT POSTS *********** */
 #feed {
     display: flex;
     flex-direction: column;
@@ -92,10 +169,15 @@ button:hover {
     background-color: #c72560;
 }
 
-/* Tipping */
+a {
+    text-decoration: none;
+    color: #c72560;
+}
+
+/* *********** TIPPING *********** */
 #tip {
     position: fixed;
-    top: 180px;
+    top: 130px;
     right: 35px;
     width: 325px;
     background: #fff;
@@ -209,11 +291,11 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* PROFILE */
-#profileBox {
+/* *********** START CONTRACT BOX *********** */
+#contractBox {
     position: fixed;
     left: 40px;
-    top: 180px;
+    top: 130px;
     width: 320px;
     background: #fff;
     border: 1px solid #e3e3e3;
@@ -224,7 +306,7 @@ button:hover {
     
 }
 
-.profileDiv {
+.contractDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -233,13 +315,13 @@ button:hover {
     border-radius: 10px;
 }
 
-.profileHeader {
+.contractHeader {
     background-color: #f56e9b;
     width: 100%;
     border-radius: 12px;
 }
 
-.profileHeader h3{
+.contractHeader h3{
     color: #000;
     font-weight: 600;
     font-size: 1.3rem;
@@ -248,16 +330,57 @@ button:hover {
     text-align: center;
 }
 
-.profileBody p{
+.contractBody p{
     text-align: center;
     color: #333;
     font-size: 0.95rem;
     margin-bottom: 8px;
 }
 
-/* CONNECT WALLET */
-#connectWallet {
-    width: 100%;
+.initDiv {
+    margin-bottom: 15px;
+}
+
+#accountAddr {
+    border-radius: 8px;
+    height: fit-content;
+    width: fit-content;
+    max-width: 175px;
+    padding-right: 10px;
+    margin: 5px;
+    transition: border-color 0.2s ease;
+    outline: none;
+    border: 1px solid #ccc;
+}
+
+#accountAddr:focus {
+    border-color: #e1306c;
+}
+
+#initBtn {   
+    font-weight: 600;   
+}
+
+.loadContractDiv {
+    margin: 5px;
+}
+
+#contractAddr {
+    border-radius: 8px;
+    height: 23px;
+    width: 200px;
+    transition: border-color 0.2s ease;
+    outline: none;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+#contractAddr:focus {
+    border-color: #e1306c;
+}
+
+#loadContractBtn {
+    width: 80px;
     background-color: #e1306c;
     color: #fff;
     border: none;
@@ -266,18 +389,81 @@ button:hover {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-bottom: 10px;
+    margin-bottom: 10px;   
 }
-#connectWallet:hover {
+
+#loadContractBtn:hover {
     background-color: #c7265e;
     transform: translateY(-2px);
 }
 
-/* Responsive */
+/* *********** Responsive *********** */
 @media (max-width: 900px){
     #profileBox {
         position: static;
         width: 90%;
         margin: 20px auto;
     }
+}
+
+/* *********** BASIC & BUSINESS USER PAGE TEMPLATE *********** */
+/* PHOTO GRID */
+.photoGrid {
+    margin-top: 20px;
+
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 40px;
+}
+
+.column {
+    flex: 50%;
+    padding: 0 100px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 325px;
+    height: 325px;
+}
+
+/* USER INFO HEADER */
+.username{
+    align-items: left;
+}
+
+.followerInfo {
+    align-items: left;
+    display: flex;
+    border: 1px solid #050505;
+    border-radius: 12px;
+    padding: 10px;
+    width: 315px;
+}
+
+.logoUsr img{
+    align-items: left;
+    width: 40px;
+}
+
+/* *********** CONTENT CREATOR ACCOUNT PAGE TEMPLATE *********** */
+#subscribeBtn {
+     width: 190px;
+    background-color: #e1306c;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 5px;
+}
+
+#subscribeBtn:hover {
+    background-color: #c7265e;
+    transform: translateY(-2px);
 }

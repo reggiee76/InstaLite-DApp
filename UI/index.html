@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Insta-Lite DApp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <img src="INSTA-lite.png" class="logo">            
+        </header>
+
+        <main>
+            <!-- START CONTRACT && GET ADDRESSES -->
+             <div id="contractBox">
+                <div class="contractDiv">
+                    <div class="contractHeader">
+                        <h3>Start Contract</h3>
+                    </div>
+
+                    <div class="contractBody">
+                        <p><strong>Active Account:</strong></p>
+                        <div class="initDiv">
+                            <select id="accountAddr">
+                                <option value="">---</option>
+                            </select>                
+                            <button id="initBtn">INIT Ganache</button><br>
+                        </div>
+                        
+                        <div class="loadContractDiv">
+                            <input type="text" id="contractAddr" placeholder="Enter contract address">
+                            <button id="loadContractBtn">Load Contract</button>
+                        </div>                        
+                    </div>
+                </div>
+             </div>
+
+             <div class="middleDiv">
+                <!-- CREATE PROFILE -->         
+                <section id="createProfileDiv">
+                    <h2>Create Profile➕</h2>
+                    <input type="text" placeholder="Enter Username" id="username">         
+                
+                    <select id="accountType">
+                        <option value="">~ Choose an Account Type ~</option>
+                        <option value="Regular">Basic</option>
+                        <option value="Business">Business</option>
+                        <option value="ContentCreator">Content Creator</option>
+                    </select>
+                    
+                    <button id="createProfileBtn">Create Profile</button>
+                </section>              
+                
+                
+                <!-- CREATE NEW POST -->
+                <section id="newPost">
+                    <h2> Create New Post📸</h2>
+                    <input type="file" id="uploadImage" accept="image/*">
+                    <input type="text" id="caption" placeholder="Write a caption...">
+                    <button id="postBtn">Post</button>
+                </section>
+             </div>
+            
+
+            <!-- FEED / RECENT POSTS-->
+             <section id="feed">
+                <h2>Recent Posts</h2>
+                <!-- **Posts will be dynamically added here** -->
+                 <div class="post">
+                    <img src="sample1.jpg" alt="Sample">
+                    <p><strong><a href="basicAccount.html">@user1</a></strong> Enjoying decentralization 🌐</p>
+                    <button id="likeBtn">💛 Like</button>
+                    <button id="tipBtn">💰 Tip</button>
+                 </div>
+
+                 <div class="post">
+                    <img src="sample11.jpg" alt="Sample">
+                    <p><strong><a href="businessAccount.html">@user2</a></strong> Enjoying the trees 🌳</p>
+                    <button id="likeBtn">💛 Like</button>
+                    <button id="tipBtn">💰 Tip</button>
+                 </div>
+
+                 <div class="post">
+                    <img src="sample10.jpg" alt="Sample">
+                    <p><strong><a href="contentCreatorAccount.html">@user3</a></strong> Enjoying the sunset 🌇</p>
+                    <button id="likeBtn">💛 Like</button>
+                    <button id="tipBtn">💰 Tip</button>
+                 </div>
+             </section>
+
+             <!-- TIPPING SECTION -->
+            <aside id="tip">
+                <div class="tipDiv">
+                    <div class="tipHeader">
+                        <h3>Leave a Tip 💰</h3>
+                    </div>                    
+
+                    <div class="tipBody">
+                        <div class="userSelect">
+                            <h4>Select a User to tip</h4>                  
+                            <select id="tipUser">
+                                <option value="">~ Choose a User ~</option>
+                                <option value="user1">@user1</option>
+                                <option value="user2">@user2</option>
+                                <option value="user3">@user3</option>
+                            </select>
+                        </div>            
+
+                        <div class="amount">
+                            <h4>Enter Amount to Tip</h4>
+                            <input type="text" id="tipAmount" placeholder="0.05 ETH">
+                            <button id="tipAmountBtn"> Tip</button>
+                        </div>                            
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            <p style="text-align: center;">Built with 💜 on Etherium</p>
+        </footer>
+
+        <script type="module" src="app-instalite.js"></script>
+
+    </body>
+</html>

@@ -5,7 +5,7 @@ console.log("InstaLite app-instalite.js (Ganache + MetaMask)", Date.now());
 // ===================== Config =====================
 const RPC_HTTP = "http://127.0.0.1:8545";                 // Ganache RPC
 const EXPECT_CHAIN_ID = 1337;                             // match Ganache
-const WEB3_URL = "https://esm.sh/web3@4?bundle&v=" + Date.now();
+//const WEB3_URL = "https://esm.sh/web3@4?bundle&v=" + Date.now();
 const DEFAULT_ADDRESS = "";                               // optional prefill
 
 const ABI_PATHS = [
@@ -13,7 +13,7 @@ const ABI_PATHS = [
 ];
 
 // ===================== State =====================
-let Web3Ctor = null;
+//let Web3Ctor = null;
 let web3;
 let accounts = [];
 let activeAccount = null;
@@ -22,11 +22,7 @@ let contractABI = null;
 let bound = false;
 
 // ===================== Utils =====================
-/* const $  = (id) => document.getElementById(id);
-const log = (m) => {
-  console.log("[InstaLite]", m);
-};
-*/
+const $ = (id) => document.getElementById(id);
 
 const log = (m) => {
   console.log("[InstaLite]", m);
@@ -36,18 +32,6 @@ const log = (m) => {
     el.scrollTop = el.scrollHeight;
   }
 };
-
-
-// dynamic Web3 import
-async function dynamicImportWeb3() {
-  if (Web3Ctor) return Web3Ctor;
-  log("Importing Web3 module…");
-  const mod = await import(WEB3_URL);
-  if (!mod?.Web3) throw new Error("Web3 ESM not available");
-  Web3Ctor = mod.Web3;
-  log("Web3 module loaded");
-  return Web3Ctor;
-}
 
 async function fetchJSON(url) {
   const res = await fetch(url, { cache: "no-store" });
@@ -115,7 +99,10 @@ function setActiveAccountFromUI() {
 async function initRPC() {
   try {
     log(`Connecting to Ganache RPC at ${RPC_HTTP} ...`);
-    const Web3 = await dynamicImportWeb3();
+
+    if (!window.Web3) {
+      throw new Error("Web3 not loaded. Check the <script> tag in HTML.");
+    }
 
     web3 = new Web3(RPC_HTTP);
 
@@ -139,16 +126,19 @@ async function initRPC() {
   }
 }
 
+
 // ===================== MetaMask (optional, via Connect Wallet) =====================
 async function connectMetaMask() {
-  await dynamicImportWeb3();
-
   if (!window.ethereum) {
     alert("MetaMask is required.");
     return;
   }
+  if (!window.Web3) {
+    alert("Web3 not loaded.");
+    return;
+  }
 
-  web3 = new Web3Ctor(window.ethereum);
+  web3 = new Web3(window.ethereum);
   accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
   if (!accounts?.length) {
     alert("No accounts from MetaMask.");
@@ -160,8 +150,9 @@ async function connectMetaMask() {
   populateAccountSelect(accounts);
   setActiveAccountFromUI();
 
-  await initContract(); // try to auto-load the contract
+  await initContract();
 }
+
 
 // ===================== Contract =====================
 async function initContract() {
@@ -207,7 +198,7 @@ async function initContract() {
 }
 
 // ===================== IMAGE UPLOAD (LOCAL → BASE64, RESIZED) =====================
-async function uploadImageAndGetURI() {
+async function uploadImageAndGetKey() {
   const file = $("uploadImage")?.files?.[0];
   if (!file) return null;
 
@@ -226,8 +217,20 @@ async function uploadImageAndGetURI() {
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        const resizedURI = canvas.toDataURL("image/jpeg", 0.75);
-        resolve(resizedURI);
+        // still a data URL, but we keep it OFF-chain
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.75);
+
+        // small key to store ON-chain
+        const key = `instalite-img-${Date.now()}-${file.name}`;
+
+        // persist image locally in browser
+        try {
+          localStorage.setItem(key, dataUrl);
+        } catch (e) {
+          console.warn("Could not store image in localStorage", e);
+        }
+
+        resolve(key);
       };
       img.src = event.target.result;
     };
@@ -260,6 +263,7 @@ async function handleCreateAccount() {
       .createProfile(username, role)
       .send({ from: activeAccount });
 
+    log(`Profile created for ${username} from ${activeAccount}`);  
     alert("Profile created/updated!");
   } catch (e) {
     console.error(e);
@@ -273,26 +277,37 @@ async function createPost() {
   if (!activeAccount) return alert("Select an account or connect MetaMask.");
 
   const caption = $("caption")?.value.trim() || "";
-  const mediaURI = await uploadImageAndGetURI();
-  if (!mediaURI) return alert("Please upload an image first.");
 
-  const isPremium = false; // could be wired to a checkbox later
+  const mediaKey = await uploadImageAndGetKey();
+  if (!mediaKey) return alert("Please upload an image first.");
+
+  const isPremium = false;
 
   try {
-    await contract.methods
-      .createPost(mediaURI, caption, isPremium)
-      .send({ from: activeAccount });
+    log(`Creating post from ${activeAccount} with mediaKey "${mediaKey}"...`);
 
+    const receipt = await contract.methods
+      .createPost(mediaKey, caption, isPremium)
+      .send({
+        from: activeAccount,
+        gas: 5000000,         // <- give plenty of gas on Ganache
+      });
+
+    log(`Post created. Tx: ${receipt.transactionHash}`);
     alert("Post created!");
+
     if ($("caption")) $("caption").value = "";
     if ($("uploadImage")) $("uploadImage").value = "";
 
     await loadFeed();
   } catch (e) {
     console.error(e);
+    log("Create post error: " + (e.message || e));
     alert("Create post error: " + (e.message || e));
   }
 }
+
+
 
 // Like post
 async function likePost(postID) {
@@ -301,6 +316,7 @@ async function likePost(postID) {
 
   try {
     await contract.methods.likePost(postID).send({ from: activeAccount });
+    log(`Post ${postID} liked by ${activeAccount}`);
     await loadFeed();
   } catch (e) {
     console.error(e);
@@ -330,6 +346,8 @@ async function tipPost(postID, toAddress) {
       from: activeAccount,
       value: valueWei,
     });
+    
+    log(`Tip succeeded: ${cleaned} ETH → ${toAddress} (post ${postID})`);
     alert("Tip sent!");
   } catch (e) {
     console.error(e);
@@ -377,6 +395,8 @@ async function tipFromAside() {
       from: activeAccount,
       value: valueWei,
     });
+
+    log(`Aside tip succeeded: ${cleaned} ETH → ${to}, postID=${postID}`);
     alert("Tip sent!");
   } catch (e) {
     console.error(e);
@@ -398,7 +418,13 @@ function renderPost(post) {
   wrapper.className = "post";
 
   const img = document.createElement("img");
-  img.src = post.mediaURI;
+
+  // post.mediaURI is the key we stored on-chain
+  const storageKey = post.mediaURI;
+  const dataUrl = localStorage.getItem(storageKey);
+
+  // if we have the image, show it; otherwise fallback
+  img.src = dataUrl || "sample1.jpg";
   img.alt = "Post image";
 
   const captionP = document.createElement("p");
@@ -499,3 +525,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   log("InstaLite DApp ready — Init Ganache or connect wallet, pick an account, then load the contract.");
 });
+
+

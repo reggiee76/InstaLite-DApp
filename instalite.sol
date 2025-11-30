@@ -163,7 +163,7 @@ contract InstaLite {
         // require(to != address(0), "Invalid Recipient.");
 
         // Revert if the recipient profile role is not a Creator.
-        require(profiles[to].role == UserRole.Creator, "Only creator users can be tipped.")
+        require(profiles[to].role == UserRole.Creator, "Only creator users can be tipped.");
 
         // Send tip to recipient and check for success using bool var "sent".
         (bool sent, ) = payable(to).call{value: msg.value}("");

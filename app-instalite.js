@@ -22,10 +22,21 @@ let contractABI = null;
 let bound = false;
 
 // ===================== Utils =====================
-const $  = (id) => document.getElementById(id);
+/* const $  = (id) => document.getElementById(id);
 const log = (m) => {
   console.log("[InstaLite]", m);
 };
+*/
+
+const log = (m) => {
+  console.log("[InstaLite]", m);
+  const el = $("log");
+  if (el) {
+    el.textContent += m + "\n";
+    el.scrollTop = el.scrollHeight;
+  }
+};
+
 
 // dynamic Web3 import
 async function dynamicImportWeb3() {
@@ -465,25 +476,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (bound) return;
   bound = true;
 
-  // Init Ganache button (the unnamed "Init Ganache" button in header)
-  const ganacheBtn = Array.from(document.querySelectorAll("header button"))
-    .find((b) => b.textContent.toLowerCase().includes("init ganache"));
-  ganacheBtn?.addEventListener("click", initRPC);
+  // Init Ganache button
+  $("initBtn")?.addEventListener("click", initRPC);
 
   // Account dropdown
   $("accountAddr")?.addEventListener("change", () => setActiveAccountFromUI());
 
   // Load contract button
-  $("loadContract")?.addEventListener("click", initContract);
+  $("loadContractBtn")?.addEventListener("click", initContract);
 
-  // Connect Wallet (MetaMask)
+  // (Optional) MetaMask button – only if you add it to HTML later
   $("connectWallet")?.addEventListener("click", connectMetaMask);
 
-  // Create Account (createProfile)
-  $("createAccount")?.addEventListener("click", handleCreateAccount);
+  // Create Profile button
+  $("createProfileBtn")?.addEventListener("click", handleCreateAccount);
 
-  // New post
-  $("postButton")?.addEventListener("click", createPost);
+  // New Post button
+  $("postBtn")?.addEventListener("click", createPost);
 
   // Tip from aside
   $("tipAmountBtn")?.addEventListener("click", tipFromAside);

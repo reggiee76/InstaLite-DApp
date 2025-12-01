@@ -93,15 +93,16 @@ networks: {
     gas: 8000000,           // Gas limit for deployments
     gasPrice: 2000000000    // 2 Gwei
   }
-
+```
 Next, adjust the Solidity compiler version so it matches your contract:
 
+```js
 compilers: {
   solc: {
     version: "0.8.0"
   }
 }
-```js
+```
 
 Save the file
 

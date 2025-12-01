@@ -101,6 +101,7 @@ compilers: {
     version: "0.8.0"
   }
 }
+```js
 
 Save the file
 

@@ -31,9 +31,10 @@ cd <project-folder>
 
 Inside this project you will find:
 
-contracts          → Solidity smart contract (InstaLite.sol)
-migrations         → Truffle deployment scripts
-UI                 → index.html, style.css, app-instalite.js
+contracts          → Solidity smart contract (instaLite.sol)
+migrations         → Truffle deployment script (1_migrate_intsalite.js)
+script             → app-instalite.js
+frontend           → UI/index.html, style.css, INSTA-lite.png
                       *sample images provided for posts
 truffle-config.js  → Truffle network/compiler settings
 
@@ -112,7 +113,10 @@ compilers: {
 - Save the file
 
 - Place the smart contract (**instalite.sol**) in the contracts folder. 
-- Place the migration script (**1_migrate_instalite.sol**) in the contracts folder. 
+- Place the migration script (**1_migrate_instalite.sol**) in the migrate folder.
+- Place the web3 integration script (**app-instalite.js**) in project root.
+- Place the frontend UI (**index.html, INTSA-lite.png**) in project root.
+- Place any necessary images for posts in project root (sample png's provided in UI/ dir).
 
 - Run the commands:
 ```

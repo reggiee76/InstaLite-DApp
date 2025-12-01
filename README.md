@@ -112,7 +112,7 @@ compilers: {
 - Save the file
 
 - Place the smart contract (**instalite.sol**) in the contracts folder. 
-- Place the migration script (**1_migrate_instalite.sol**) in the contracts folder. 
+- Place the migration script (**1_migrate_instalite.js**) in the migrations folder. 
 
 - Run the commands:
 ```
@@ -138,7 +138,7 @@ python3 -m http.server 8030
 ```
 Then visit:
 
-http://127.0.0.1:8030/index.html
+http://127.0.0.1:8030/UI/index.html
 
 -------------------------------------------------------------
 
